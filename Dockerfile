@@ -77,7 +77,7 @@ ENV THREDDS_XMX_SIZE 4G
 
 ENV THREDDS_XMS_SIZE 4G
 
-ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.3/thredds%2523%25235.3.war
+ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.4/thredds%2523%25235.4-SNAPSHOT.war
 
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
 
@@ -104,6 +104,18 @@ COPY files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
 COPY files/setenv.sh $CATALINA_HOME/bin/setenv.sh
 
 COPY files/javaopts.sh $CATALINA_HOME/bin/javaopts.sh
+
+# added for RENCI catalog files
+COPY files/catalog.xml $CATALINA_HOME/content/thredds/catalog.xml
+COPY files/asgs2021.xml $CATALINA_HOME/content/thredds/asgs2021.xml
+COPY files/asgs2022.xml $CATALINA_HOME/content/thredds/asgs2022.xml
+COPY files/Reanalysis.xml $CATALINA_HOME/content/thredds/Reanalysis.xml
+COPY files/renci-logo.png $CATALINA_HOME/webapp/thredds
+COPY files/tds.css $CATALINA_HOME/webapp/thredds
+RUN mkdir $CATALINA_HOME/content/thredds/logs
+RUN chmod 777 $CATALINA_HOME/content/thredds/logs
+RUN touch $CATALINA_HOME/content/thredds/logs/serverStartup.log
+RUN chmod 777 $CATALINA_HOME/content/thredds/logs/serverStartup.log
 
 RUN chmod 755 $CATALINA_HOME/bin/*.sh
 
