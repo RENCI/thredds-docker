@@ -153,5 +153,5 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["catalina.sh", "run"]
 
-HEALTHCHECK --interval=10s --timeout=3s \
-	CMD curl --fail 'http://localhost:8080/thredds/catalog.html' || exit 1
+#HEALTHCHECK --interval=10s --timeout=3s \
+#	CMD curl --fail 'http://localhost:8080/thredds/catalog.html' || exit 1
