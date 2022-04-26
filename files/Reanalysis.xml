@@ -53,8 +53,8 @@
     <datasetScan 
         name="ADCIRC" 
         ID="ADCIRC" 
-        path="Reanalysis/ADCIRC" 
-	location="/usr/local/tomcat/content/thredds/public/reanalysis/ADCIRC/">
+        path="reanalysis/ADCIRC"
+	    location="/usr/local/tomcat/content/thredds/public/reanalysis/ADCIRC/">
 
         <metadata inherited="true">
 	    <serviceName>all</serviceName>
