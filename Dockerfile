@@ -82,11 +82,10 @@ RUN mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
 COPY ./files/catalog.xml ${CATALINA_HOME}/content/thredds/catalog.xml
 COPY ./files/asgs2021.xml ${CATALINA_HOME}/content/thredds/asgs2021.xml
 COPY ./files/asgs2022.xml ${CATALINA_HOME}/content/thredds/asgs2022.xml
-COPY ./files/Reanalysis.xml ${CATALINA_HOME}/content/thredds/Reanalysis.xml
 
 # add the renci website branding
-COPY ./files/renci-logo.png ${CATALINA_HOME}/webapp/thredds/renci-logo.png
-COPY ./files/tds.css ${CATALINA_HOME}/webapp/thredds/tds.css
+COPY ./files/renci-logo.png ${CATALINA_HOME}/webapps/thredds/renci-logo.png
+COPY ./files/tds.css ${CATALINA_HOME}/webapps/thredds/tds.css
 
 # create the non-root user and move the entire site config there
 RUN useradd -ms /bin/bash nru &&  \
