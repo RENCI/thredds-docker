@@ -27,7 +27,7 @@
             name="Forcing" 
             ID="Forcing" 
             path="Reanalysis/Forcing" 
-	    location="/usr/local/tomcat/content/thredds/public/reanalysis/Forcing/">
+	    location="/thredds-data/reanalysis/Forcing/">
 
 	    <metadata inherited="true">
 	        <serviceName>all</serviceName>
@@ -54,7 +54,7 @@
         name="ADCIRC" 
         ID="ADCIRC" 
         path="reanalysis/ADCIRC"
-	    location="/usr/local/tomcat/content/thredds/public/reanalysis/ADCIRC/">
+	    location="/thredds-data/reanalysis/ADCIRC/">
 
         <metadata inherited="true">
 	    <serviceName>all</serviceName>

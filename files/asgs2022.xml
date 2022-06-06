@@ -14,7 +14,7 @@
 	    name="ASGS-2022"
 	    ID="ASGS-2022"
 	    path="2022"
-	    location="/usr/local/tomcat/content/thredds/public/asgs-2022">
+	    location="/thredds-data/asgs-2022">
 
 	    <metadata inherited="true">
 		<serviceName>all</serviceName>
