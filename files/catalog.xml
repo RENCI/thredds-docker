@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="RENCI TDS5 test"
+        xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <service name="all" base="" serviceType="compound">
+    <service name="odap" serviceType="OpenDAP" base="/thredds/dodsC/" />
+    <service name="dap4" serviceType="DAP4" base="/thredds/dap4/" />
+    <service name="http" serviceType="HTTPServer" base="/thredds/fileServer/" />
+  </service>
+
+<dataset name="RENCI THREDDS Catalogs">
+    <catalogRef xlink:href="asgs2022.xml"    xlink:title="RENCI ASGS 2022"   name=""/>
+    <catalogRef xlink:href="asgs2021.xml"    xlink:title="RENCI ASGS 2021"   name=""/>
+</dataset>
+
+
+
+</catalog>
