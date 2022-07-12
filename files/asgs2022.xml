@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--
-SPDX-FileCopyrightText: 2022 Renaissance Computing Institute. All rights reserved.
-
-SPDX-License-Identifier: GPL-3.0-or-later
-SPDX-License-Identifier: LicenseRef-RENCI
-SPDX-License-Identifier: MIT
--->
-
 <catalog name="ASGS/NCFS/RENCI"
         xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"
         xmlns:xlink="http://www.w3.org/1999/xlink">
