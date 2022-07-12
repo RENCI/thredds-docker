@@ -23,7 +23,7 @@ SPDX-License-Identifier: MIT
 	    name="ASGS-2022"
 	    ID="ASGS-2022"
 	    path="2022"
-	    location="/thredds-data/2022">
+	    location="/thredds-data/asgs-2022">
 
 	    <metadata inherited="true">
 		<serviceName>all</serviceName>
@@ -34,4 +34,7 @@ SPDX-License-Identifier: MIT
 		<include wildcard="*"/>
 	    </filter>
 	</datasetScan>
+
+
 </catalog>
+
