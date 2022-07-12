@@ -14,7 +14,7 @@
 	    name="ASGS-2021"
 	    ID="ASGS-2021"
 	    path="2021"
-	    location="/thredds-data/asgs-2021">
+	    location="/thredds-data/2021">
 
 	    <metadata inherited="true">
 		<serviceName>all</serviceName>
