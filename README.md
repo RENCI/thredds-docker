@@ -1,3 +1,11 @@
+<!--
+SPDX-FileCopyrightText: 2022 Renaissance Computing Institute. All rights reserved.
+
+SPDX-License-Identifier: GPL-3.0-or-later
+SPDX-License-Identifier: LicenseRef-RENCI
+SPDX-License-Identifier: MIT
+-->
+
 - [THREDDS Docker](#h92CD77E8)
   - [Versions](#h8766A6B1)
   - [Quickstart](#h887A6923)
