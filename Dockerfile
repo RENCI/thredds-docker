@@ -82,6 +82,7 @@ RUN mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
 COPY ./files/catalog.xml ${CATALINA_HOME}/content/thredds/catalog.xml
 COPY ./files/asgs2021.xml ${CATALINA_HOME}/content/thredds/asgs2021.xml
 COPY ./files/asgs2022.xml ${CATALINA_HOME}/content/thredds/asgs2022.xml
+COPY ./files/asgs2023.xml ${CATALINA_HOME}/content/thredds/asgs2023.xml
 
 # add the renci website branding
 COPY ./files/renci-logo.png ${CATALINA_HOME}/webapps/thredds/renci-logo.png

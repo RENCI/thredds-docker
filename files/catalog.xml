@@ -10,6 +10,7 @@
   </service>
 
 <dataset name="RENCI THREDDS Catalogs">
+    <catalogRef xlink:href="asgs2023.xml"    xlink:title="RENCI ASGS 2023"   name=""/>
     <catalogRef xlink:href="asgs2022.xml"    xlink:title="RENCI ASGS 2022"   name=""/>
     <catalogRef xlink:href="asgs2021.xml"    xlink:title="RENCI ASGS 2021"   name=""/>
 </dataset>
