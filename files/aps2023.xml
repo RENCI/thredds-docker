@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<catalog name="ASGS/NCFS/RENCI"
+<catalog name="APS/NCFS/RENCI"
         xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"
         xmlns:xlink="http://www.w3.org/1999/xlink">
 
         <service name="all" base="" serviceType="compound">
            <service name="odap" serviceType="OpenDAP" base="/thredds/dodsC/" />
-           <service name="dap4" serviceType="DAP4" base="/thredds/dap4/" />
+           <!--service name="dap4" serviceType="DAP4" base="/thredds/dap4/" /-->
            <service name="http" serviceType="HTTPServer" base="/thredds/fileServer/" />
            <service name="ncml" serviceType="NCML" base="/thredds/ncml/" />
         </service>
 
 	<datasetScan
-	    name="ASGS-2022"
-	    ID="ASGS-2022"
-	    path="2022"
-	    location="/projects/ncfs/opendap/data/2022">
+	    name="APS-2023"
+	    ID="APS-2023"
+	    path="2023"
+	    location="/projects/ncfs/opendap/data/2023">
 
 	    <metadata inherited="true">
 		<serviceName>all</serviceName>
-		<documentation type="summary"> ASGS Results for 2022 </documentation>
+		<documentation type="summary"> APS Results for 2023 </documentation>
 	    </metadata>
-
+            <filesSort increasing="false" />
 	    <filter>
 		<include wildcard="*"/>
 	    </filter>
-	</datasetScan>
 
+	</datasetScan>
 
 </catalog>
 
