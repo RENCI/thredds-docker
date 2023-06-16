@@ -14,22 +14,12 @@ ENV H5DIR /usr/local
 ENV PDIR /usr
 ENV HDF5_VER hdf5-${HDF5_VERSION}
 ENV HDF5_FILE ${HDF5_VER}.tar.gz
+
 # tds envs
 ENV TDS_CONTENT_ROOT_PATH /usr/local/tomcat/content
-ENV THREDDS_XMX_SIZE 4G
+ENV THREDDS_XMX_SIZE 6G
 ENV THREDDS_XMS_SIZE 4G
 ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.4/thredds-5.4.war
-
-COPY files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
-COPY files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
-COPY files/setenv.sh ${CATALINA_HOME}/bin/setenv.sh
-COPY files/javaopts.sh ${CATALINA_HOME}/bin/javaopts.sh
-
-# add RENCI catalog configuration files
-COPY ./files/catalog.xml ${CATALINA_HOME}/content/thredds/catalog.xml
-COPY ./files/asgs2021.xml ${CATALINA_HOME}/content/thredds/asgs2021.xml
-COPY ./files/asgs2022.xml ${CATALINA_HOME}/content/thredds/asgs2022.xml
-COPY ./files/asgs2023.xml ${CATALINA_HOME}/content/thredds/asgs2023.xml
 
 # Install necessary packages
 RUN apt-get update && \
@@ -65,15 +55,53 @@ RUN apt-get update && \
     chmod 755 ${CATALINA_HOME}/bin/*.sh && \
     mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
 
+# create the THREDDS config content directory
+RUN mkdir -p ${CATALINA_HOME}/content/thredds
+
+ENV TDS_CONTENT_ROOT_PATH /home/nru/tomcat/content
+
+# copy in the RENCI THREDDS users and configs
+COPY ./files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
+COPY ./files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
+
+# copy in the tomcat java options
+COPY ./files/setenv.sh ${CATALINA_HOME}/bin/setenv.sh
+COPY ./files/javaopts.sh ${CATALINA_HOME}/bin/javaopts.sh
+RUN chmod 755 ${CATALINA_HOME}/bin/*.sh
+
+# Create the .systemPrefs directory
+RUN mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
+
+# add RENCI catalog configuration files
+COPY ./files/catalog.xml ${CATALINA_HOME}/content/thredds/catalog.xml
+COPY ./files/asgs2021.xml ${CATALINA_HOME}/content/thredds/asgs2021.xml
+COPY ./files/asgs2022.xml ${CATALINA_HOME}/content/thredds/asgs2022.xml
+COPY ./files/aps2023.xml ${CATALINA_HOME}/content/thredds/aps2023.xml
+COPY ./files/Reanalysis.xml ${CATALINA_HOME}/content/thredds/Reanalysis.xml
+
+# add the renci website branding
+COPY ./files/renci-logo.png ${CATALINA_HOME}/webapps/thredds/renci-logo.png
+COPY ./files/tds.css ${CATALINA_HOME}/webapps/thredds/tds.css
+
+# create the non-root user and move the entire site config there
+RUN useradd -ms /bin/bash -u 30000 nru &&  \
+    mv /usr/local/tomcat /home/nru/ && \
+    rm -rf /usr/local/tomcat
+
+# make sure the non-root user is the owner of everything
+RUN chown -R nru:nru /home/nru/
+
+# set the working directory to the non-root user
+WORKDIR /home/nru
+
+# reset the home directory for the tomcat startup
+ENV CATALINA_HOME /home/nru/tomcat
+
+# Expose ports
 EXPOSE 8080 8443
 
-WORKDIR ${CATALINA_HOME}
+# switch to the non-root user
+USER nru
 
-# Inherited from parent container
-ENTRYPOINT ["/entrypoint.sh"]
-
-# Start container
-CMD ["catalina.sh", "run"]
-
-HEALTHCHECK --interval=10s --timeout=3s \
-	CMD curl --fail 'http://localhost:8080/thredds/catalog.html' || exit 1
+# start the site, inherited from parent container
+ENTRYPOINT ["/entrypoint.sh", "/home/nru/tomcat/bin/catalina.sh", "run"]
