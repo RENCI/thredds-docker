@@ -14,7 +14,7 @@
 	    name="ASGS-2023"
 	    ID="ASGS-2023"
 	    path="2023"
-	    location="/thredds-data/2023">
+	    location="/projects/ncfs/opendap/data/2023">
 
 	    <metadata inherited="true">
 		<serviceName>all</serviceName>
