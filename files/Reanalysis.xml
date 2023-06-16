@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="Coastal Reanalysis"
+         xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+<!--
+  <contributor role="data manager">John Smith</contributor>
+  <keyword>Atmospheric Chemistry</keyword>
+  <publisher>
+    <long_name vocabulary="DIF">Community Data Portal, National Center for Atmospheric Research, University Corporation for Atmospheric Research</long_name>
+    <contact url="http://dataportal.ucar.edu" email="cdp@ucar.edu"/>
+  </publisher>
+-->
+
+    <service name="ThisAll" base="" serviceType="compound">
+        <service name="odap" serviceType="OpenDAP" base="/thredds/dodsC/" />
+        <!--service name="dap4" serviceType="DAP4" base="/thredds/dap4/" /-->
+        <service name="http" serviceType="HTTPServer" base="/thredds/fileServer/" />
+        <!--service name="wcs" serviceType="WCS" base="/thredds/wcs/" /-->
+        <!--service name="wms" serviceType="WMS" base="/thredds/wms/" /-->
+        <!--service name="ncss" serviceType="NetcdfSubset" base="/thredds/ncss/" /-->
+        <!--service name="iso" serviceType="ISO" base="/thredds/iso/" /-->
+        <service name="ncml" serviceType="NCML" base="/thredds/ncml/" />
+        <!--service name="uddc" serviceType="UDDC" base="/thredds/uddc/" /-->
+    </service>
+
+    <datasetScan 
+        name="ADCIRC" 
+        ID="ADCIRC" 
+        path="ReanalysisV2/ADCIRC" 
+	    location="/projects/reanalysis/ADCIRC/ERA5/hsofs.V2">
+
+        <metadata inherited="true">
+	    <serviceName>all</serviceName>
+            <authority>renci.org</authority>
+            <dataType>GRID</dataType>
+            <documentation> Reanalysis ADCIRC solutions.  </documentation>
+        </metadata>
+        <filter>
+		<!--include wildcard="*"/-->
+		<!--include wildcard="fort.15"/-->
+		<!--include wildcard="*.nc"/-->
+		<!--exclude wildcard="fort.22*"/-->  
+		<!--exclude wildcard="*.sh"/ -->
+		<exclude wildcard="run.*"/>
+		<exclude wildcard="fort.??"/>
+		<exclude wildcard="initiallydry.63.nc"/>
+		<exclude wildcard="inundationtime.63.nc"/>
+		<exclude wildcard="endrisinginun.63.nc"/>
+		<exclude wildcard="everdried.63.nc"/>
+		<exclude wildcard="adcirc.log"/>
+		<exclude wildcard="swaninit"/>
+		<exclude wildcard="submit.*"/>
+		<exclude wildcard="temp.1"/>
+		<exclude wildcard="tide_fac.out"/>
+		<exclude wildcard="slurm*"/>
+		<exclude wildcard="*.sh"/>
+		<exclude wildcard="*~"/>
+		<exclude wildcard="*.py"/>
+		<exclude wildcard="README"/>
+		<exclude wildcard="*.txt"/>
+		<exclude wildcard=".gitignore*"/>
+		<exclude wildcard="Grids" atomic="false" collection="true" />
+		<exclude wildcard="bin" atomic="false" collection="true" />
+		<exclude wildcard="configs" atomic="false" collection="true" />
+		<exclude wildcard="common" atomic="false" collection="true" />
+		<exclude wildcard="Tides" atomic="false" collection="true" />
+		<exclude wildcard="TracksToRun" atomic="false" collection="true" />
+		<exclude wildcard="ec95d*" atomic="false" collection="true" />
+		<exclude wildcard="PE*" atomic="false" collection="true" />
+		<exclude wildcard=".git*" atomic="false" collection="true" />
+		</filter>
+        <sort>
+             <lexigraphicByName increasing="true"/>
+        </sort>
+    </datasetScan>
+
+<!--/dataset-->
+
+</catalog>
