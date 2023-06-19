@@ -4,6 +4,12 @@ MAINTAINER Unidata
 
 USER root
 
+# get the build argument that has the version
+ARG APP_VERSION=$(APP_VERSION)
+
+# now add the version arg value into a ENV param
+ENV APP_VERSION=$APP_VERSION
+
 # netcdf envs
 ENV LD_LIBRARY_PATH /usr/local/lib:${LD_LIBRARY_PATH}
 ENV HDF5_VERSION 1.12.2
@@ -58,8 +64,6 @@ RUN apt-get update && \
 # create the THREDDS config content directory
 RUN mkdir -p ${CATALINA_HOME}/content/thredds
 
-ENV TDS_CONTENT_ROOT_PATH /home/nru/tomcat/content
-
 # copy in the RENCI THREDDS users and configs
 COPY ./files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
 COPY ./files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
@@ -96,6 +100,9 @@ WORKDIR /home/nru
 
 # reset the home directory for the tomcat startup
 ENV CATALINA_HOME /home/nru/tomcat
+
+# set the new tomcat environment path
+ENV TDS_CONTENT_ROOT_PATH /home/nru/tomcat/content
 
 # Expose ports
 EXPOSE 8080 8443
