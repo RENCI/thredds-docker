@@ -64,6 +64,10 @@ RUN apt-get update && \
 # create the THREDDS config content directory
 RUN mkdir -p ${CATALINA_HOME}/content/thredds
 
+############################
+## start of renci ops
+############################
+
 # copy in the RENCI THREDDS users and configs
 COPY ./files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
 COPY ./files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
