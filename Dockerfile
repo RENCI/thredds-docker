@@ -70,7 +70,7 @@ RUN mkdir -p ${CATALINA_HOME}/content/thredds
 
 # copy in the RENCI THREDDS users and configs
 COPY ./files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
-COPY ./files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
+#COPY ./files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
 
 # copy in the tomcat java options
 COPY ./files/setenv.sh ${CATALINA_HOME}/bin/setenv.sh
