@@ -68,28 +68,17 @@ RUN mkdir -p ${CATALINA_HOME}/content/thredds
 ## start of renci ops
 ############################
 
-# copy in the RENCI THREDDS users and configs
-COPY ./files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
-#COPY ./files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
+# add the renci website branding
+COPY ./files/renci-logo.png ${CATALINA_HOME}/webapps/thredds/renci-logo.png
+COPY ./files/tds.css ${CATALINA_HOME}/webapps/thredds/tds.css
+
+# Create the .systemPrefs directory
+RUN mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
 
 # copy in the tomcat java options
 COPY ./files/setenv.sh ${CATALINA_HOME}/bin/setenv.sh
 COPY ./files/javaopts.sh ${CATALINA_HOME}/bin/javaopts.sh
 RUN chmod 755 ${CATALINA_HOME}/bin/*.sh
-
-# Create the .systemPrefs directory
-RUN mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
-
-# add RENCI catalog configuration files
-COPY ./files/catalog.xml ${CATALINA_HOME}/content/thredds/catalog.xml
-COPY ./files/asgs2021.xml ${CATALINA_HOME}/content/thredds/asgs2021.xml
-COPY ./files/asgs2022.xml ${CATALINA_HOME}/content/thredds/asgs2022.xml
-COPY ./files/aps2023.xml ${CATALINA_HOME}/content/thredds/aps2023.xml
-COPY ./files/Reanalysis.xml ${CATALINA_HOME}/content/thredds/Reanalysis.xml
-
-# add the renci website branding
-COPY ./files/renci-logo.png ${CATALINA_HOME}/webapps/thredds/renci-logo.png
-COPY ./files/tds.css ${CATALINA_HOME}/webapps/thredds/tds.css
 
 # create the non-root user and move the entire site config there
 RUN useradd -ms /bin/bash -u 30000 nru &&  \
