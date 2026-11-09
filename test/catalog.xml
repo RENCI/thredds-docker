@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="smoke" xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0">
+  <service name="all" serviceType="Compound" base="">
+    <service name="odap" serviceType="OpenDAP" base="/thredds/dodsC/"/>
+    <service name="http" serviceType="HTTPServer" base="/thredds/fileServer/"/>
+  </service>
+  <datasetScan name="smoke" ID="smoke" path="smoke" location="/data">
+    <metadata inherited="true"><serviceName>all</serviceName></metadata>
+  </datasetScan>
+</catalog>
