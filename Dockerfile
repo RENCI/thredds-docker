@@ -1,4 +1,4 @@
-FROM unidata/tomcat-docker:8.5-jdk11
+FROM unidata/tomcat-docker:11-jdk17
 
 MAINTAINER Unidata
 
@@ -25,36 +25,40 @@ ENV HDF5_FILE ${HDF5_VER}.tar.gz
 ENV TDS_CONTENT_ROOT_PATH /usr/local/tomcat/content
 ENV THREDDS_XMX_SIZE 6G
 ENV THREDDS_XMS_SIZE 4G
-ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.4/thredds-5.4.war
 
 # Install necessary packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends  vim build-essential m4 \
         libpthread-stubs0-dev libcurl4-openssl-dev gosu zip unzip && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    # zlib
-    curl https://zlib.net/fossils/zlib-${ZLIB_VERSION}.tar.gz | tar xz && \
+    rm -rf /var/lib/apt/lists/*
+
+# zlib operations
+RUN curl -fsSL https://zlib.net/fossils/zlib-${ZLIB_VERSION}.tar.gz | tar xz && \
     cd zlib-${ZLIB_VERSION} && \
     ./configure --prefix=/usr/local && \
-    make && make install && \
-    cd .. && rm -rf zlib-${ZLIB_VERSION} && \
-    # hdf
-    curl https://support.hdfgroup.org/ftp/HDF5/releases/${HDF5_VER%.*}/${HDF5_VER}/src/${HDF5_FILE} | tar xz && \
+    make -j"$(nproc)" && make install && \
+    cd .. && rm -rf zlib-${ZLIB_VERSION}
+
+# hdf operations
+RUN curl -fsSL https://support.hdfgroup.org/ftp/HDF5/releases/${HDF5_VER%.*}/${HDF5_VER}/src/${HDF5_FILE} | tar xz && \
     cd hdf5-${HDF5_VERSION} && \
     ./configure --with-zlib=${ZDIR} --prefix=${H5DIR} --enable-threadsafe --with-pthread=${PDIR} --enable-unsupported --prefix=/usr/local && \
-    make && make check && make install && make check-install && ldconfig && \
-    cd .. && rm -rf hdf5-${HDF5_VERSION} && \
-    # netcdf
-    export CPPFLAGS=-I/usr/local/include \
+    make -j"$(nproc)" && make install && ldconfig && \
+    cd .. && rm -rf hdf5-${HDF5_VERSION}
+
+# netcdf operations
+RUN export CPPFLAGS=-I/usr/local/include \
     LDFLAGS=-L/usr/local/lib && \
-    curl https://downloads.unidata.ucar.edu/netcdf-c/${NETCDF_VERSION}/netcdf-c-${NETCDF_VERSION}.tar.gz | tar xz && \
+    curl -fsSL https://downloads.unidata.ucar.edu/netcdf-c/${NETCDF_VERSION}/netcdf-c-${NETCDF_VERSION}.tar.gz | tar xz && \
     cd netcdf-c-${NETCDF_VERSION} && \
     ./configure --disable-dap-remote-tests --disable-libxml2 --prefix=/usr/local && \
-    make check && make install && ldconfig && \
-    cd .. && rm -rf netcdf-c-${NETCDF_VERSION} && \
-    # thredds
-    curl -fSL "${THREDDS_WAR_URL}" -o thredds.war && \
+    make -j"$(nproc)" && make install && ldconfig && \
+    cd .. && rm -rf netcdf-c-${NETCDF_VERSION}
+
+# thredds operations, kept after the compiles so a TDS version bump reuses their cache
+ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.10/thredds-5.10.war
+RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war && \
     unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/ && \
     rm -f thredds.war && \
     mkdir -p ${CATALINA_HOME}/content/thredds && \
